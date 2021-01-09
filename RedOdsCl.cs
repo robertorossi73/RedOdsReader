@@ -3,7 +3,7 @@
  * Author:  Roberto Rossi
  * Name:    Red Ods Reader
  * Web:     http://www.redchar.net
- * Version: 1.0.9
+ * Version: 1.1.0
  * 
  * Lightweight library written in C# for reading Open Document Spreadsheet (.ODS) files
  * 
@@ -32,6 +32,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace ROdsLib
     //
     //TODO : ridefinire indici. Invece di partire da 1...N, implementare da 0...N
     //
-    class RedOdsReader
+    public class RedOdsReader
     {
         //definizione di una singola cella
         private class ROdsCell
@@ -400,6 +401,13 @@ namespace ROdsLib
             }
         }
 
+        /// <summary>
+        /// Ritorna il valore di una cella come string
+        /// </summary>
+        /// <param name="TableName">nome foglio</param>
+        /// <param name="RowN">numero riga 1..N</param>
+        /// <param name="ColN">numero colonna 1..N</param>
+        /// <returns>Valore stringa contenuto nella cella</returns>
         public string GetCellValueText(string TableName, int RowN, int ColN)
         {
             string result = "";
@@ -412,6 +420,27 @@ namespace ROdsLib
             result = GetCellVal(cell, true);
 
             return result;
+        }
+
+        /// <summary>
+        /// Ritorna il valore di una cella convertendo il suo valore stringa in numero decimal
+        /// </summary>
+        /// <param name="TableName">nome foglio</param>
+        /// <param name="RowN">numero riga 1..N</param>
+        /// <param name="ColN">numero colonna 1..N</param>
+        /// <returns>Valore cella convertito in valore numerico</returns>
+        public decimal GetCellValueTextAsDecimal(string TableName, int RowN, int ColN)
+        {
+            string val;
+            decimal res = 0;
+            var nfi = new NumberFormatInfo { CurrencyDecimalSeparator = "." };
+
+            val = this.GetCellValueText(TableName, RowN, ColN);
+            val = val.Replace(',', '.');
+
+            decimal.TryParse(val, NumberStyles.Currency, nfi, out res);
+
+            return res;
         }
 
         //carica i dati presenti nel file specificato
