@@ -23,7 +23,7 @@ namespace ConsoleAppTest
             ROdsLib.RedOdsReader OdsObj = new ROdsLib.RedOdsReader();
 
             //Apriamo un file .ODS
-            OdsObj.LoadFile("citta_italia.ods");
+            OdsObj.LoadFile("..\\..\\..\\citta_italia.ods");
 
             //impostiamo il nome del foglio/tabella da leggere
             sheetName = "Foglio1";
