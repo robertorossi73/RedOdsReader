@@ -30,6 +30,7 @@ Fatto ciò, vediamo un po di codice:
     int lastRow;
     int lastCol;
     string sheetName;
+    decimal decValue;
     List<string> sheetsList;
     string value;
     
@@ -62,6 +63,10 @@ Fatto ciò, vediamo un po di codice:
 
     //leggiamo la cella B1
     value = OdsObj.GetCellValueText(sheetName, 1, 2);
+    
+    //leggiamo il valore numerico inserito in B2
+    decValue = OdsObj.GetCellValueTextAsDecimal(sheetName, 2, 2);
+    
 ```
 
 Allo stato attuale la libreria è in una fase embrionale quindi, in futuro, arriveranno **cambiamenti**, **miglioramenti**, **nuove implementazioni** ed eventuali **correzioni**.
